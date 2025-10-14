@@ -86,6 +86,19 @@ def format_date(date_str):
             return None
 
 
+from dateutil import parser as date_parser
+
+def format_date_flexible(date_str):
+    """Try to parse any date format and return YYYY-MM-DD"""
+    if not date_str:
+        return None
+    try:
+        dt = date_parser.parse(date_str, dayfirst=True)  # dayfirst=True handles "20 November 2025"
+        return dt.strftime("%Y-%m-%d")
+    except (ValueError, TypeError):
+        return None
+
+
 def parse_invoice_text(invoice_text: str) -> dict:
     """Use Groq AI to parse invoice data and clean JSON response."""
     prompt = f"""
@@ -104,7 +117,7 @@ Invoice text:
         temperature=0
     )
 
-    # ✅ Correct attribute access
+    # Correct attribute access
     result_text = response.choices[0].message.content.strip()
 
     # Remove Markdown formatting if present
@@ -114,9 +127,15 @@ Invoice text:
 
     try:
         data = json.loads(result_text)
-        return data
     except json.JSONDecodeError:
         raise ValueError(f"Groq AI did not return valid JSON. Response: {result_text}")
+
+    # Normalize dates
+    data["invoice_date"] = format_date_flexible(data.get("invoice_date", ""))
+    data["due_date"] = format_date_flexible(data.get("due_date", ""))
+
+    return data
+
 
 
 # -----------------------------
@@ -179,7 +198,7 @@ async def upload_invoice(file: UploadFile = File(...)):
 # -----------------------------
 # GET - View all invoices
 # -----------------------------
-    @app.get("/invoices/")
+@app.get("/invoices/")
 def get_all_invoices():
     try:
         cursor.execute("SELECT * FROM invoices")

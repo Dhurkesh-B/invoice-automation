@@ -6,3 +6,11 @@ pytesseract
 
 openpyxl
 requests
+
+
+
+imapclient 
+pyzmail36 
+pdf2image 
+pytesseract 
+pillow
