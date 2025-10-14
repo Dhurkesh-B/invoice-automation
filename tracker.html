@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Tracker</title>
+    <style>
+        /* Perplexity Design System */
+        :root {
+            /* Primitive Color Tokens */
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-teal-800: rgba(41, 150, 161, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            --color-orange-500: rgba(168, 75, 47, 1);
+
+            /* RGB versions for opacity control */
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-slate-500-rgb: 98, 108, 113;
+            --color-red-500-rgb: 192, 21, 47;
+            --color-red-400-rgb: 255, 84, 89;
+            --color-orange-500-rgb: 168, 75, 47;
+            --color-orange-400-rgb: 230, 129, 97;
+
+            /* Background color tokens (Light Mode) */
+            --color-bg-1: rgba(59, 130, 246, 0.08);
+            --color-bg-2: rgba(245, 158, 11, 0.08);
+            --color-bg-3: rgba(34, 197, 94, 0.08);
+            --color-bg-4: rgba(239, 68, 68, 0.08);
+            --color-bg-5: rgba(147, 51, 234, 0.08);
+            --color-bg-6: rgba(249, 115, 22, 0.08);
+            --color-bg-7: rgba(236, 72, 153, 0.08);
+            --color-bg-8: rgba(6, 182, 212, 0.08);
+
+            /* Semantic Color Tokens (Light Mode) */
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-btn-primary-text: var(--color-cream-50);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-error: var(--color-red-500);
+            --color-success: var(--color-teal-500);
+            --color-warning: var(--color-orange-500);
+            --color-info: var(--color-slate-500);
+            --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+            --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+            /* Common style patterns */
+            --focus-ring: 0 0 0 3px var(--color-focus-ring);
+            --focus-outline: 2px solid var(--color-primary);
+            --status-bg-opacity: 0.15;
+            --status-border-opacity: 0.25;
+            --select-caret-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            --select-caret-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+
+            /* RGB versions for opacity control */
+            --color-success-rgb: 33, 128, 141;
+            --color-error-rgb: 192, 21, 47;
+            --color-warning-rgb: 168, 75, 47;
+            --color-info-rgb: 98, 108, 113;
+
+            /* Typography */
+            --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-md: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --letter-spacing-tight: -0.01em;
+
+            /* Spacing */
+            --space-0: 0;
+            --space-1: 1px;
+            --space-2: 2px;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-10: 10px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-md: 10px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+            /* Animation */
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+            /* Layout */
+            --container-sm: 640px;
+            --container-md: 768px;
+            --container-lg: 1024px;
+            --container-xl: 1280px;
+        }
+
+        /* Dark mode colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* RGB versions for opacity control (Dark Mode) */
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+
+                /* Background color tokens (Dark Mode) */
+                --color-bg-1: rgba(29, 78, 216, 0.15);
+                --color-bg-2: rgba(180, 83, 9, 0.15);
+                --color-bg-3: rgba(21, 128, 61, 0.15);
+                --color-bg-4: rgba(185, 28, 28, 0.15);
+                --color-bg-5: rgba(107, 33, 168, 0.15);
+                --color-bg-6: rgba(194, 65, 12, 0.15);
+                --color-bg-7: rgba(190, 24, 93, 0.15);
+                --color-bg-8: rgba(8, 145, 178, 0.15);
+
+                /* Semantic Color Tokens (Dark Mode) */
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+                --color-primary-active: var(--color-teal-800);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+                --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-error: var(--color-red-400);
+                --color-success: var(--color-teal-300);
+                --color-warning: var(--color-orange-400);
+                --color-info: var(--color-gray-300);
+                --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+                --color-btn-primary-text: var(--color-slate-900);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+                --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+                --button-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-border-secondary: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+                /* RGB versions for dark mode */
+                --color-success-rgb: var(--color-teal-300-rgb);
+                --color-error-rgb: var(--color-red-400-rgb);
+                --color-warning-rgb: var(--color-orange-400-rgb);
+                --color-info-rgb: var(--color-gray-300-rgb);
+            }
+        }
+
+        /* Base styles */
+        html {
+            font-size: var(--font-size-base);
+            font-family: var(--font-family-base);
+            line-height: var(--line-height-normal);
+            color: var(--color-text);
+            background-color: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            font-weight: var(--font-weight-semibold);
+            line-height: var(--line-height-tight);
+            color: var(--color-text);
+            letter-spacing: var(--letter-spacing-tight);
+        }
+
+        h1 { font-size: var(--font-size-4xl); }
+        h2 { font-size: var(--font-size-3xl); }
+        h3 { font-size: var(--font-size-2xl); }
+        h4 { font-size: var(--font-size-xl); }
+        h5 { font-size: var(--font-size-lg); }
+        h6 { font-size: var(--font-size-md); }
+
+        p {
+            margin: 0 0 var(--space-16) 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: none;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .btn:focus-visible {
+            outline: none;
+            box-shadow: var(--focus-ring);
+        }
+
+        .btn--primary {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .btn--primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn--secondary {
+            background: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        .btn--secondary:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .btn--danger {
+            background: var(--color-error);
+            color: var(--color-white);
+        }
+
+        .btn--danger:hover {
+            background: var(--color-red-400);
+        }
+
+        .btn--sm {
+            padding: var(--space-4) var(--space-12);
+            font-size: var(--font-size-sm);
+            border-radius: var(--radius-sm);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Form elements */
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: var(--space-8) var(--space-12);
+            font-size: var(--font-size-md);
+            line-height: 1.5;
+            color: var(--color-text);
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+        }
+
+        select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: var(--select-caret-light);
+            background-repeat: no-repeat;
+            background-position: right var(--space-12) center;
+            background-size: 16px;
+            padding-right: var(--space-32);
+        }
+
+        .form-control:focus {
+            border-color: var(--color-primary);
+            outline: var(--focus-outline);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-16);
+        }
+
+        /* Card component */
+        .card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .card__body {
+            padding: var(--space-16);
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-6) var(--space-12);
+            border-radius: var(--radius-full);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+        }
+
+        .status--success {
+            background-color: rgba(var(--color-success-rgb), var(--status-bg-opacity));
+            color: var(--color-success);
+            border: 1px solid rgba(var(--color-success-rgb), var(--status-border-opacity));
+        }
+
+        .status--error {
+            background-color: rgba(var(--color-error-rgb), var(--status-bg-opacity));
+            color: var(--color-error);
+            border: 1px solid rgba(var(--color-error-rgb), var(--status-border-opacity));
+        }
+
+        /* Container layout */
+        .container {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            padding-right: var(--space-16);
+            padding-left: var(--space-16);
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                max-width: var(--container-sm);
+            }
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: var(--container-md);
+            }
+        }
+        @media (min-width: 1024px) {
+            .container {
+                max-width: var(--container-lg);
+            }
+        }
+        @media (min-width: 1280px) {
+            .container {
+                max-width: var(--container-xl);
+            }
+        }
+
+        /* Custom styles for invoice tracker */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-background);
+        }
+
+        .login-form {
+            background: var(--color-surface);
+            padding: var(--space-32);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+            background-color: var(--color-background);
+        }
+
+        .dashboard-header {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-16) 0;
+        }
+
+        .dashboard-content {
+            padding: var(--space-24) 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-16);
+            margin-bottom: var(--space-24);
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            padding: var(--space-16);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-top: var(--space-4);
+        }
+
+        .table-container {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: var(--space-16);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-12);
+        }
+
+        .search-input {
+            max-width: 300px;
+            flex: 1;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: var(--space-12);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .table th {
+            background: var(--color-bg-1);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .table th:hover {
+            background: var(--color-bg-2);
+        }
+
+        .table tr:hover {
+            background: var(--color-bg-1);
+        }
+
+        .amount {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary);
+        }
+
+        .overdue {
+            color: var(--color-error);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-16);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: var(--font-size-xl);
+            cursor: pointer;
+            color: var(--color-text-secondary);
+            padding: var(--space-4);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-16);
+        }
+
+        .error-message {
+            color: var(--color-error);
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-4);
+        }
+
+        .success-message {
+            color: var(--color-success);
+            background: rgba(var(--color-success-rgb), 0.1);
+            padding: var(--space-8) var(--space-12);
+            border-radius: var(--radius-base);
+            border: 1px solid rgba(var(--color-success-rgb), 0.2);
+            margin-bottom: var(--space-16);
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .gap-8 {
+            gap: var(--space-8);
+        }
+
+        .gap-12 {
+            gap: var(--space-12);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .mb-16 {
+            margin-bottom: var(--space-16);
+        }
+
+        .mt-16 {
+            margin-top: var(--space-16);
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .table {
+                min-width: 800px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header .flex {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-form">
+            <h2 class="mb-16">Invoice Tracker Login</h2>
+            <div id="loginError" class="error-message hidden"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn--primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+        <div class="dashboard-header">
+            <div class="container">
+                <div class="flex justify-between items-center">
+                    <h1>Invoice Tracker</h1>
+                    <button id="logoutBtn" class="btn btn--secondary">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="container">
+                <!-- Statistics -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div id="totalInvoices" class="stat-number">0</div>
+                        <div class="stat-label">Total Invoices</div>
+                    </div>
+                    <div class="stat-card">
+                        <div id="totalAmount" class="stat-number">₹0</div>
+                        <div class="stat-label">Total Amount</div>
+                    </div>
+                    <div class="stat-card">
+                        <div id="paidCount" class="stat-number">0</div>
+                        <div class="stat-label">Paid Invoices</div>
+                    </div>
+                    <div class="stat-card">
+                        <div id="unpaidCount" class="stat-number">0</div>
+                        <div class="stat-label">Unpaid Invoices</div>
+                    </div>
+                </div>
+
+                <!-- Invoices Table -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Invoices</h3>
+                        <div class="flex gap-12">
+                            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search invoices...">
+                            <button id="addInvoiceBtn" class="btn btn--primary">Add New Invoice</button>
+                        </div>
+                    </div>
+                    <div id="successMessage" class="success-message hidden"></div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th data-sort="invoice_number">Invoice Number ↕</th>
+                                <th data-sort="client_name">Client Name ↕</th>
+                                <th data-sort="service">Service ↕</th>
+                                <th data-sort="amount">Amount ↕</th>
+                                <th data-sort="phone_number">Phone Number ↕</th>
+                                <th data-sort="date">Date ↕</th>
+                                <th data-sort="due_date">Due Date ↕</th>
+                                <th data-sort="payment_status">Status ↕</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Invoice</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="invoiceForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="modalInvoiceNumber">Invoice Number</label>
+                        <input type="text" id="modalInvoiceNumber" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="modalClientName">Client Name</label>
+                        <input type="text" id="modalClientName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="modalService">Service</label>
+                        <input type="text" id="modalService" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="modalAmount">Amount</label>
+                        <input type="number" id="modalAmount" class="form-control" required min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="modalPhoneNumber">Phone Number</label>
+                        <input type="tel" id="modalPhoneNumber" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="modalDate">Date</label>
+                        <input type="date" id="modalDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="modalDueDate">Due Date</label>
+                        <input type="date" id="modalDueDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="modalPaymentStatus">Payment Status</label>
+                        <select id="modalPaymentStatus" class="form-control" required>
+                            <option value="">Select Status</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Unpaid">Unpaid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex gap-12 mt-16">
+                    <button type="submit" class="btn btn--primary">Save Invoice</button>
+                    <button type="button" class="btn btn--secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Delete</h3>
+                <button class="close-btn" onclick="closeDeleteModal()">&times;</button>
+            </div>
+            <p>Are you sure you want to delete this invoice? This action cannot be undone.</p>
+            <div class="flex gap-12 mt-16">
+                <button id="confirmDeleteBtn" class="btn btn--danger">Delete</button>
+                <button type="button" class="btn btn--secondary" onclick="closeDeleteModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        const API_BASE_URL = 'http://localhost:8000';
+        let currentUser = null;
+        let currentEditingInvoice = null;
+        let currentDeleteInvoice = null;
+        let sortDirection = {};
+        
+        // Invoices data (fetched from backend)
+        let invoices = [];
+
+        // Login credentials
+        const validCredentials = {
+            email: "bharad008@rmkcet.ac.in",
+            password: "123"
+        };
+
+        // DOM elements
+        const loginPage = document.getElementById('loginPage');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const addInvoiceBtn = document.getElementById('addInvoiceBtn');
+        const invoiceModal = document.getElementById('invoiceModal');
+        const deleteModal = document.getElementById('deleteModal');
+        const invoiceForm = document.getElementById('invoiceForm');
+        const searchInput = document.getElementById('searchInput');
+        const invoiceTableBody = document.getElementById('invoiceTableBody');
+        const successMessage = document.getElementById('successMessage');
+
+        // API functions
+        async function fetchInvoices() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/invoices/`);
+                const data = await response.json();
+                
+                if (data.invoices) {
+                    // Transform backend data to match frontend format
+                    invoices = data.invoices.map(inv => ({
+                        id: inv.id,
+                        invoice_number: inv.invoice_number,
+                        client_name: inv.client_name,
+                        service: 'Service', // Backend doesn't have service field
+                        amount: inv.total,
+                        phone_number: '0000000000', // Backend doesn't have phone field
+                        date: inv.invoice_date,
+                        due_date: inv.due_date,
+                        payment_status: inv.status,
+                        subtotal: inv.subtotal,
+                        tax: inv.tax
+                    }));
+                    updateStats();
+                    renderInvoiceTable();
+                }
+            } catch (error) {
+                console.error('Error fetching invoices:', error);
+                showMessage('Failed to fetch invoices from server', 'error');
+            }
+        }
+
+        async function updateInvoiceAPI(invoiceId, invoiceData) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/invoices/${invoiceId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        client_name: invoiceData.client_name,
+                        invoice_number: invoiceData.invoice_number,
+                        invoice_date: invoiceData.date,
+                        due_date: invoiceData.due_date,
+                        subtotal: invoiceData.subtotal || invoiceData.amount * 0.9,
+                        tax: invoiceData.tax || invoiceData.amount * 0.1,
+                        total: invoiceData.amount,
+                        status: invoiceData.payment_status
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to update invoice');
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Error updating invoice:', error);
+                throw error;
+            }
+        }
+
+        async function deleteInvoiceAPI(invoiceId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/invoices/${invoiceId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to delete invoice');
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Error deleting invoice:', error);
+                throw error;
+            }
+        }
+
+        // Utility functions
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function isOverdue(dueDateString) {
+            const dueDate = new Date(dueDateString);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return dueDate < today;
+        }
+
+        function generateInvoiceNumber() {
+            const existingNumbers = invoices.map(inv => {
+                const match = inv.invoice_number.match(/INV(\d+)/);
+                return match ? parseInt(match[1]) : 0;
+            });
+            const maxNumber = Math.max(...existingNumbers, 0);
+            return `INV${String(maxNumber + 1).padStart(3, '0')}`;
+        }
+
+        function showMessage(message, type = 'success') {
+            successMessage.textContent = message;
+            successMessage.className = type === 'success' ? 'success-message' : 'error-message';
+            successMessage.classList.remove('hidden');
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Login functionality
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === validCredentials.email && password === validCredentials.password) {
+                currentUser = { email };
+                showDashboard();
+            } else {
+                loginError.textContent = 'Invalid email or password';
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        logoutBtn.addEventListener('click', function() {
+            currentUser = null;
+            showLogin();
+        });
+
+        function showLogin() {
+            loginPage.classList.remove('hidden');
+            dashboard.classList.add('hidden');
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            loginError.classList.add('hidden');
+        }
+
+        async function showDashboard() {
+            loginPage.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+            await fetchInvoices();
+        }
+
+        // Statistics
+        function updateStats() {
+            const totalInvoices = invoices.length;
+            const totalAmount = invoices.reduce((sum, inv) => sum + inv.amount, 0);
+            const paidCount = invoices.filter(inv => inv.payment_status === 'Paid').length;
+            const unpaidCount = invoices.filter(inv => inv.payment_status === 'Unpaid').length;
+
+            document.getElementById('totalInvoices').textContent = totalInvoices;
+            document.getElementById('totalAmount').textContent = formatCurrency(totalAmount);
+            document.getElementById('paidCount').textContent = paidCount;
+            document.getElementById('unpaidCount').textContent = unpaidCount;
+        }
+
+        // Table rendering
+        function renderInvoiceTable(filteredInvoices = null) {
+            const invoicesToRender = filteredInvoices || invoices;
+            invoiceTableBody.innerHTML = '';
+
+            invoicesToRender.forEach(invoice => {
+                const row = document.createElement('tr');
+                const isOverdueInvoice = invoice.payment_status === 'Unpaid' && isOverdue(invoice.due_date);
+                
+                row.innerHTML = `
+                    <td>${invoice.invoice_number}</td>
+                    <td>${invoice.client_name}</td>
+                    <td>${invoice.service}</td>
+                    <td class="amount">${formatCurrency(invoice.amount)}</td>
+                    <td>${invoice.phone_number}</td>
+                    <td>${formatDate(invoice.date)}</td>
+                    <td class="${isOverdueInvoice ? 'overdue' : ''}">${formatDate(invoice.due_date)}</td>
+                    <td>
+                        <span class="status ${invoice.payment_status === 'Paid' ? 'status--success' : 'status--error'}">
+                            ${invoice.payment_status}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="flex gap-8">
+                            <button class="btn btn--sm btn--secondary" onclick="editInvoice('${invoice.invoice_number}')">Edit</button>
+                            <button class="btn btn--sm btn--danger" onclick="deleteInvoice('${invoice.invoice_number}')">Delete</button>
+                        </div>
+                    </td>
+                `;
+                invoiceTableBody.appendChild(row);
+            });
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredInvoices = invoices.filter(invoice => 
+                invoice.invoice_number.toLowerCase().includes(searchTerm) ||
+                invoice.client_name.toLowerCase().includes(searchTerm) ||
+                invoice.service.toLowerCase().includes(searchTerm) ||
+                invoice.payment_status.toLowerCase().includes(searchTerm)
+            );
+            renderInvoiceTable(filteredInvoices);
+        });
+
+        // Sorting functionality
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', function() {
+                const field = this.dataset.sort;
+                const direction = sortDirection[field] === 'asc' ? 'desc' : 'asc';
+                sortDirection[field] = direction;
+                
+                const sortedInvoices = [...invoices].sort((a, b) => {
+                    let aVal = a[field];
+                    let bVal = b[field];
+                    
+                    if (field === 'amount') {
+                        aVal = parseFloat(aVal);
+                        bVal = parseFloat(bVal);
+                    } else if (field === 'date' || field === 'due_date') {
+                        aVal = new Date(aVal);
+                        bVal = new Date(bVal);
+                    } else {
+                        aVal = aVal.toString().toLowerCase();
+                        bVal = bVal.toString().toLowerCase();
+                    }
+                    
+                    if (aVal < bVal) return direction === 'asc' ? -1 : 1;
+                    if (aVal > bVal) return direction === 'asc' ? 1 : -1;
+                    return 0;
+                });
+                
+                renderInvoiceTable(sortedInvoices);
+                
+                // Update sort indicators
+                document.querySelectorAll('th[data-sort]').forEach(header => {
+                    const arrow = header === this ? (direction === 'asc' ? ' ↑' : ' ↓') : ' ↕';
+                    header.textContent = header.textContent.replace(/ [↕↑↓]$/, '') + arrow;
+                });
+            });
+        });
+
+        // Modal functions
+        function openModal(title = 'Add New Invoice') {
+            document.getElementById('modalTitle').textContent = title;
+            invoiceModal.classList.add('active');
+        }
+
+        function closeModal() {
+            invoiceModal.classList.remove('active');
+            currentEditingInvoice = null;
+            invoiceForm.reset();
+        }
+
+        function closeDeleteModal() {
+            deleteModal.classList.remove('active');
+            currentDeleteInvoice = null;
+        }
+
+        // Invoice CRUD operations
+        addInvoiceBtn.addEventListener('click', function() {
+            currentEditingInvoice = null;
+            document.getElementById('modalInvoiceNumber').value = generateInvoiceNumber();
+            openModal('Add New Invoice');
+        });
+
+        function editInvoice(invoiceNumber) {
+            const invoice = invoices.find(inv => inv.invoice_number === invoiceNumber);
+            if (!invoice) return;
+            
+            currentEditingInvoice = invoice;
+            
+            // Populate form
+            document.getElementById('modalInvoiceNumber').value = invoice.invoice_number;
+            document.getElementById('modalClientName').value = invoice.client_name;
+            document.getElementById('modalService').value = invoice.service;
+            document.getElementById('modalAmount').value = invoice.amount;
+            document.getElementById('modalPhoneNumber').value = invoice.phone_number;
+            document.getElementById('modalDate').value = invoice.date;
+            document.getElementById('modalDueDate').value = invoice.due_date;
+            document.getElementById('modalPaymentStatus').value = invoice.payment_status;
+            
+            openModal('Edit Invoice');
+        }
+
+        function deleteInvoice(invoiceNumber) {
+            currentDeleteInvoice = invoiceNumber;
+            deleteModal.classList.add('active');
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async function() {
+            if (currentDeleteInvoice) {
+                try {
+                    // Find the invoice to get its ID
+                    const invoice = invoices.find(inv => inv.invoice_number === currentDeleteInvoice);
+                    if (invoice && invoice.id) {
+                        await deleteInvoiceAPI(invoice.id);
+                        invoices = invoices.filter(inv => inv.invoice_number !== currentDeleteInvoice);
+                        updateStats();
+                        renderInvoiceTable();
+                        showMessage('Invoice deleted successfully');
+                    } else {
+                        // If no ID, just remove from local array (for new invoices not yet saved)
+                        invoices = invoices.filter(inv => inv.invoice_number !== currentDeleteInvoice);
+                        updateStats();
+                        renderInvoiceTable();
+                        showMessage('Invoice deleted successfully');
+                    }
+                    closeDeleteModal();
+                } catch (error) {
+                    showMessage('Failed to delete invoice', 'error');
+                    console.error('Delete error:', error);
+                }
+            }
+        });
+
+        invoiceForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                invoice_number: document.getElementById('modalInvoiceNumber').value,
+                client_name: document.getElementById('modalClientName').value,
+                service: document.getElementById('modalService').value,
+                amount: parseFloat(document.getElementById('modalAmount').value),
+                phone_number: document.getElementById('modalPhoneNumber').value,
+                date: document.getElementById('modalDate').value,
+                due_date: document.getElementById('modalDueDate').value,
+                payment_status: document.getElementById('modalPaymentStatus').value
+            };
+            
+            // Validation
+            if (new Date(formData.due_date) < new Date(formData.date)) {
+                alert('Due date cannot be earlier than invoice date');
+                return;
+            }
+            
+            try {
+                if (currentEditingInvoice) {
+                    // Update existing invoice
+                    if (currentEditingInvoice.id) {
+                        await updateInvoiceAPI(currentEditingInvoice.id, formData);
+                    }
+                    const index = invoices.findIndex(inv => inv.invoice_number === currentEditingInvoice.invoice_number);
+                    if (index !== -1) {
+                        invoices[index] = { ...formData, id: currentEditingInvoice.id };
+                        showMessage('Invoice updated successfully');
+                    }
+                } else {
+                    // Add new invoice (local only - backend doesn't support POST for manual entry)
+                    invoices.push(formData);
+                    showMessage('Invoice added successfully (local only)');
+                }
+                
+                updateStats();
+                renderInvoiceTable();
+                closeModal();
+            } catch (error) {
+                showMessage('Failed to save invoice', 'error');
+                console.error('Save error:', error);
+            }
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === invoiceModal) {
+                closeModal();
+            }
+            if (e.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
+
+        // Initialize app
+        function init() {
+            showLogin();
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
